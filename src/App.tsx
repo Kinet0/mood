@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Heart, Drop, Flame, Moon, Camera, Bubble, CheckCircle2 } from 'lucide-react';
+import { Sparkles, Heart } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import MoodCard from './components/MoodCard';
 import ChecklistItem from './components/ChecklistItem';
