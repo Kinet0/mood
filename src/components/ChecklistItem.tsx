@@ -1,20 +1,23 @@
 import { motion } from 'framer-motion';
+import type { MouseEvent } from 'react';
 
 interface ChecklistItemProps {
   label: string;
   completed: boolean;
   onToggle: () => void;
+  onClick?: (event: MouseEvent<HTMLLabelElement>) => void;
 }
 
-const ChecklistItem = ({ label, completed, onToggle }: ChecklistItemProps) => {
+const ChecklistItem = ({ label, completed, onToggle, onClick }: ChecklistItemProps) => {
   return (
     <motion.label
       htmlFor={label}
+      onClick={onClick}
       className={`group flex cursor-pointer items-center gap-4 rounded-[28px] border border-white/60 bg-white/70 p-4 text-sm shadow-glow transition-all duration-300 ${
         completed ? 'bg-[#ffe4ec] border-pink-200/90' : 'hover:border-pink-200/90'
       }`}
-      whileHover={{ y: -2 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={{ y: -2, rotate: [0, 1, -1, 0] }}
+      whileTap={{ scale: 0.98, rotate: [0, -2, 2, 0] }}
     >
       <input
         id={label}

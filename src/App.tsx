@@ -1,8 +1,17 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Heart } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { MouseEvent, useMemo, useState } from 'react';
 import MoodCard from './components/MoodCard';
 import ChecklistItem from './components/ChecklistItem';
+
+type HeartParticle = {
+  id: string;
+  left: number;
+  top: number;
+  color: string;
+  size: number;
+  delay: number;
+};
 
 const moodOptions = [
   { emoji: '😍', label: 'In Love' },
@@ -22,12 +31,34 @@ const tasks = [
 const App = () => {
   const [selectedMood, setSelectedMood] = useState<string>('');
   const [completedTasks, setCompletedTasks] = useState<boolean[]>(Array(tasks.length).fill(false));
+  const [heartParticles, setHeartParticles] = useState<HeartParticle[]>([]);
 
   const completedCount = completedTasks.filter(Boolean).length;
   const progressPercentage = useMemo(
     () => Math.round((completedCount / tasks.length) * 100),
     [completedCount],
   );
+
+  const createHeartBurst = (event: MouseEvent<HTMLElement>) => {
+    const baseX = event.clientX;
+    const baseY = event.clientY;
+    const colors = ['#ff4b9b', '#ffffff', '#ff1493'];
+    const newParticles = Array.from({ length: 6 }, (_, index) => ({
+      id: `${Date.now()}-${index}`,
+      left: baseX + (Math.random() - 0.5) * 120,
+      top: baseY + (Math.random() - 0.5) * 90,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      size: 18 + Math.random() * 14,
+      delay: Math.random() * 0.15,
+    }));
+
+    setHeartParticles((previous) => [...previous, ...newParticles]);
+
+    const ids = newParticles.map((particle) => particle.id);
+    window.setTimeout(() => {
+      setHeartParticles((previous) => previous.filter((particle) => !ids.includes(particle.id)));
+    }, 1100);
+  };
 
   const handleToggleTask = (index: number) => {
     setCompletedTasks((previous) => {
@@ -72,6 +103,25 @@ const App = () => {
         transition={{ duration: 0.8, ease: 'easeOut' }}
         className="relative z-10 w-full max-w-4xl rounded-[44px] border border-white/70 bg-white/80 p-6 shadow-[0_35px_120px_rgba(255,105,180,0.18)] backdrop-blur-3xl sm:p-10"
       >
+        <div className="pointer-events-none absolute inset-0 z-50">
+          {heartParticles.map((particle) => (
+            <motion.span
+              key={particle.id}
+              className="pointer-events-none absolute font-black leading-none"
+              style={{
+                left: particle.left,
+                top: particle.top,
+                color: particle.color,
+                fontSize: particle.size,
+              }}
+              initial={{ opacity: 1, y: 0, scale: 0.95, rotate: -15 }}
+              animate={{ opacity: 0, y: -70, scale: 1.3, rotate: [ -15, 5, -5 ] }}
+              transition={{ duration: 1.05, delay: particle.delay, ease: 'easeOut' }}
+            >
+              ❤️
+            </motion.span>
+          ))}
+        </div>
         <div className="relative overflow-hidden rounded-[42px] border border-white/60 bg-gradient-to-br from-white/90 via-[#fff0f4]/90 to-[#ffeaf3]/80 p-6 shadow-glow sm:p-10">
           <motion.div
             className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,105,180,0.15),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(255,20,147,0.12),_transparent_30%)]"
@@ -149,7 +199,10 @@ const App = () => {
                         emoji={mood.emoji}
                         label={mood.label}
                         selected={selectedMood === mood.label}
-                        onSelect={() => setSelectedMood(mood.label)}
+                        onSelect={(event) => {
+                          setSelectedMood(mood.label);
+                          createHeartBurst(event);
+                        }}
                       />
                     ))}
                   </div>
@@ -198,6 +251,10 @@ const App = () => {
                         label={task}
                         completed={completedTasks[index]}
                         onToggle={() => handleToggleTask(index)}
+                        onClick={(event) => {
+                          handleToggleTask(index);
+                          createHeartBurst(event);
+                        }}
                       />
                     ))}
                   </div>
