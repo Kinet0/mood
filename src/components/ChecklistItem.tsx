@@ -17,7 +17,7 @@ const ChecklistItem = ({ label, completed, onToggle, onClick }: ChecklistItemPro
         completed ? 'bg-[#ffe4ec] border-pink-200/90' : 'hover:border-pink-200/90'
       }`}
       whileHover={{ y: -2, rotate: [0, 1, -1, 0] }}
-      whileTap={{ scale: 0.98, rotate: [0, -2, 2, 0] }}
+      whileTap={{ scale: 0.98, rotate: [0, -2, 2, 0], x: [0, -2, 2, -1, 1, 0] }}
     >
       <input
         id={label}

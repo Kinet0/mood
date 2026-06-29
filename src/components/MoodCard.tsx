@@ -15,7 +15,7 @@ const MoodCard = ({ emoji, label, selected, onSelect }: MoodCardProps) => {
       type="button"
       onClick={onSelect}
       whileHover={{ scale: 1.03, rotate: [0, 1, -1, 0] }}
-      whileTap={{ scale: 0.98, rotate: [0, -3, 3, 0] }}
+      whileTap={{ scale: 0.98, rotate: [0, -3, 3, 0], x: [0, -3, 3, -2, 2, 0] }}
       className={`relative overflow-hidden rounded-[30px] border border-white/50 bg-white/60 p-6 text-left shadow-glow backdrop-blur-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-200/70 ${
         selected
           ? 'border-pink-300 bg-gradient-to-br from-[#fff0f4] via-[#ffe7ee] to-[#fff2f6] shadow-[0_0_40px_rgba(255,105,180,0.25)]'

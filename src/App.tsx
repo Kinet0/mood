@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Heart } from 'lucide-react';
-import { MouseEvent, useMemo, useState } from 'react';
+import { MouseEvent, useEffect, useMemo, useState } from 'react';
 import MoodCard from './components/MoodCard';
 import ChecklistItem from './components/ChecklistItem';
 
@@ -28,16 +28,64 @@ const tasks = [
   'Send me pics 📸',
 ];
 
+type TaskProgress = {
+  completed: boolean;
+  completedAt: string | null;
+};
+
+const STORAGE_KEY = 'mood-checklist-progress';
+
+const createInitialTaskProgress = (): TaskProgress[] => tasks.map(() => ({ completed: false, completedAt: null }));
+
+const formatCompletionDate = (value: string | null) => {
+  if (!value) {
+    return null;
+  }
+
+  return new Intl.DateTimeFormat('en', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date(value));
+};
+
 const App = () => {
   const [selectedMood, setSelectedMood] = useState<string>('');
-  const [completedTasks, setCompletedTasks] = useState<boolean[]>(Array(tasks.length).fill(false));
+  const [taskProgress, setTaskProgress] = useState<TaskProgress[]>(() => {
+    if (typeof window === 'undefined') {
+      return createInitialTaskProgress();
+    }
+
+    try {
+      const savedProgress = window.localStorage.getItem(STORAGE_KEY);
+      if (!savedProgress) {
+        return createInitialTaskProgress();
+      }
+
+      const parsedProgress = JSON.parse(savedProgress) as TaskProgress[];
+      if (Array.isArray(parsedProgress) && parsedProgress.length === tasks.length) {
+        return parsedProgress;
+      }
+    } catch {
+      // Fall back to the default empty progress state if parsing fails.
+    }
+
+    return createInitialTaskProgress();
+  });
   const [heartParticles, setHeartParticles] = useState<HeartParticle[]>([]);
 
+  const completedTasks = taskProgress.map((task) => task.completed);
   const completedCount = completedTasks.filter(Boolean).length;
   const progressPercentage = useMemo(
     () => Math.round((completedCount / tasks.length) * 100),
     [completedCount],
   );
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(taskProgress));
+    }
+  }, [taskProgress]);
 
   const createHeartBurst = (event: MouseEvent<HTMLElement>) => {
     const baseX = event.clientX;
@@ -61,11 +109,18 @@ const App = () => {
   };
 
   const handleToggleTask = (index: number) => {
-    setCompletedTasks((previous) => {
-      const next = [...previous];
-      next[index] = !next[index];
-      return next;
-    });
+    setTaskProgress((previous) =>
+      previous.map((task, taskIndex) => {
+        if (taskIndex !== index) {
+          return task;
+        }
+
+        return {
+          completed: !task.completed,
+          completedAt: task.completed ? null : new Date().toISOString(),
+        };
+      }),
+    );
   };
 
   return (
@@ -257,6 +312,18 @@ const App = () => {
                         }}
                       />
                     ))}
+                  </div>
+                  <div className="mt-5 space-y-2">
+                    {taskProgress
+                      .map((task, index) => ({ ...task, label: tasks[index] }))
+                      .filter((task) => task.completedAt)
+                      .sort((firstTask, secondTask) => (secondTask.completedAt ?? '').localeCompare(firstTask.completedAt ?? ''))
+                      .map((task) => (
+                        <div key={task.label} className="rounded-2xl border border-pink-100/80 bg-white/70 px-3 py-2 text-sm text-[#7a3157] shadow-sm">
+                          <span className="font-semibold">{task.label}</span>
+                          <span className="ml-2 text-pink-600">• completed {formatCompletionDate(task.completedAt)}</span>
+                        </div>
+                      ))}
                   </div>
                   <div className="mt-6 rounded-[28px] border border-pink-100/80 bg-pink-50/80 p-4 text-center text-sm text-[#7e2b5e] shadow-inner">
                     {selectedMood
