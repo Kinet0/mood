@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
-import type { MouseEvent } from 'react';
+import { useEffect, useState, type MouseEvent } from 'react';
 
 interface MoodCardProps {
   emoji: string;
@@ -10,12 +10,30 @@ interface MoodCardProps {
 }
 
 const MoodCard = ({ emoji, label, selected, onSelect }: MoodCardProps) => {
+  const [isShaking, setIsShaking] = useState(false);
+
+  useEffect(() => {
+    if (!isShaking) {
+      return undefined;
+    }
+
+    const timeout = window.setTimeout(() => setIsShaking(false), 320);
+    return () => window.clearTimeout(timeout);
+  }, [isShaking]);
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setIsShaking(true);
+    onSelect(event);
+  };
+
   return (
     <motion.button
       type="button"
-      onClick={onSelect}
+      onClick={handleClick}
+      animate={isShaking ? { x: [0, -8, 7, -5, 4, 0], rotate: [0, -3, 3, -2, 2, 0] } : { x: 0, rotate: 0 }}
+      transition={{ duration: 0.35, ease: 'easeInOut' }}
       whileHover={{ scale: 1.03, rotate: [0, 1, -1, 0] }}
-      whileTap={{ scale: 0.98, rotate: [0, -3, 3, 0], x: [0, -3, 3, -2, 2, 0] }}
+      whileTap={{ scale: 0.98, rotate: [0, -3, 3, 0], x: [0, -6, 6, -4, 4, 0] }}
       className={`relative overflow-hidden rounded-[30px] border border-white/50 bg-white/60 p-6 text-left shadow-glow backdrop-blur-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-pink-200/70 ${
         selected
           ? 'border-pink-300 bg-gradient-to-br from-[#fff0f4] via-[#ffe7ee] to-[#fff2f6] shadow-[0_0_40px_rgba(255,105,180,0.25)]'

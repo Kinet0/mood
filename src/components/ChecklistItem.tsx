@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import type { MouseEvent } from 'react';
+import { useEffect, useState, type MouseEvent } from 'react';
 
 interface ChecklistItemProps {
   label: string;
@@ -9,15 +9,33 @@ interface ChecklistItemProps {
 }
 
 const ChecklistItem = ({ label, completed, onToggle, onClick }: ChecklistItemProps) => {
+  const [isShaking, setIsShaking] = useState(false);
+
+  useEffect(() => {
+    if (!isShaking) {
+      return undefined;
+    }
+
+    const timeout = window.setTimeout(() => setIsShaking(false), 320);
+    return () => window.clearTimeout(timeout);
+  }, [isShaking]);
+
+  const handleClick = (event: MouseEvent<HTMLLabelElement>) => {
+    setIsShaking(true);
+    onClick?.(event);
+  };
+
   return (
     <motion.label
       htmlFor={label}
-      onClick={onClick}
+      onClick={handleClick}
+      animate={isShaking ? { x: [0, -6, 6, -4, 4, 0], rotate: [0, -2, 2, -1, 1, 0] } : { x: 0, rotate: 0 }}
+      transition={{ duration: 0.35, ease: 'easeInOut' }}
       className={`group flex cursor-pointer items-center gap-4 rounded-[28px] border border-white/60 bg-white/70 p-4 text-sm shadow-glow transition-all duration-300 ${
         completed ? 'bg-[#ffe4ec] border-pink-200/90' : 'hover:border-pink-200/90'
       }`}
       whileHover={{ y: -2, rotate: [0, 1, -1, 0] }}
-      whileTap={{ scale: 0.98, rotate: [0, -2, 2, 0], x: [0, -2, 2, -1, 1, 0] }}
+      whileTap={{ scale: 0.98, rotate: [0, -2, 2, 0], x: [0, -4, 4, -2, 2, 0] }}
     >
       <input
         id={label}

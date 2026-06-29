@@ -11,6 +11,8 @@ type HeartParticle = {
   color: string;
   size: number;
   delay: number;
+  travelX: number;
+  travelY: number;
 };
 
 const moodOptions = [
@@ -90,15 +92,26 @@ const App = () => {
   const createHeartBurst = (event: MouseEvent<HTMLElement>) => {
     const baseX = event.clientX;
     const baseY = event.clientY;
-    const colors = ['#ff4b9b', '#ffffff', '#ff1493'];
-    const newParticles = Array.from({ length: 6 }, (_, index) => ({
-      id: `${Date.now()}-${index}`,
-      left: baseX + (Math.random() - 0.5) * 120,
-      top: baseY + (Math.random() - 0.5) * 90,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      size: 18 + Math.random() * 14,
-      delay: Math.random() * 0.15,
-    }));
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const colors = ['#ff4b9b', '#ffffff', '#ff1493', '#ffd1dc'];
+    const newParticles = Array.from({ length: 16 }, (_, index) => {
+      const spreadX = (Math.random() - 0.5) * viewportWidth * 0.9;
+      const spreadY = (Math.random() - 0.5) * viewportHeight * 0.9;
+      const startX = Math.max(12, Math.min(viewportWidth - 12, baseX + spreadX * 0.35));
+      const startY = Math.max(12, Math.min(viewportHeight - 12, baseY + spreadY * 0.35));
+
+      return {
+        id: `${Date.now()}-${index}`,
+        left: startX,
+        top: startY,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        size: 16 + Math.random() * 18,
+        delay: Math.random() * 0.15,
+        travelX: (Math.random() - 0.5) * 260,
+        travelY: (Math.random() - 0.5) * 260 - 180,
+      };
+    });
 
     setHeartParticles((previous) => [...previous, ...newParticles]);
 
@@ -170,8 +183,8 @@ const App = () => {
                 fontSize: particle.size,
               }}
               initial={{ opacity: 1, y: 0, scale: 0.95, rotate: -15 }}
-              animate={{ opacity: 0, y: -70, scale: 1.3, rotate: [ -15, 5, -5 ] }}
-              transition={{ duration: 1.05, delay: particle.delay, ease: 'easeOut' }}
+              animate={{ opacity: [1, 0.8, 0], x: particle.travelX, y: particle.travelY, scale: [0.95, 1.25, 1.4], rotate: [-15, 5, -5] }}
+              transition={{ duration: 1.1, delay: particle.delay, ease: 'easeOut' }}
             >
               ❤️
             </motion.span>
