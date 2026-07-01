@@ -90,35 +90,55 @@ const App = () => {
   }, [taskProgress]);
 
   const createHeartBurst = (event: MouseEvent<HTMLElement>) => {
+    // Arrange particles in window-like columns with ~0.2in (19px) vertical spacing
     const baseX = event.clientX;
     const baseY = event.clientY;
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-    const colors = ['#ff4b9b', '#ffffff', '#ff1493', '#ffd1dc'];
-    const newParticles = Array.from({ length: 16 }, (_, index) => {
-      const spreadX = (Math.random() - 0.5) * viewportWidth * 0.9;
-      const spreadY = (Math.random() - 0.5) * viewportHeight * 0.9;
-      const startX = Math.max(12, Math.min(viewportWidth - 12, baseX + spreadX * 0.35));
-      const startY = Math.max(12, Math.min(viewportHeight - 12, baseY + spreadY * 0.35));
 
-      return {
-        id: `${Date.now()}-${index}`,
-        left: startX,
-        top: startY,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        size: 16 + Math.random() * 18,
-        delay: Math.random() * 0.15,
-        travelX: (Math.random() - 0.5) * 260,
-        travelY: (Math.random() - 0.5) * 260 - 180,
-      };
-    });
+    // Colors requested: red, white, pink panther pink
+    const colors = ['#ff0000', '#ffffff', '#ff69b4'];
+
+    const inchesToPx = (inches: number) => inches * 96; // 1in = 96px
+    const verticalSpacing = Math.round(inchesToPx(0.2)); // ~19px
+
+    const columns = 3;
+    const rows = 8;
+    const columnGap = 44; // horizontal separation between columns
+
+    const startRowTop = baseY - ((rows - 1) / 2) * verticalSpacing;
+
+    const newParticles: HeartParticle[] = [];
+
+    for (let c = 0; c < columns; c++) {
+      const colCenterX = baseX + (c - (columns - 1) / 2) * columnGap + (Math.random() - 0.5) * 18;
+
+      for (let r = 0; r < rows; r++) {
+        const startX = Math.max(12, Math.min(viewportWidth - 12, colCenterX + (Math.random() - 0.5) * 20));
+        const startY = Math.max(12, Math.min(viewportHeight - 12, startRowTop + r * verticalSpacing + (Math.random() - 0.5) * 6));
+
+        const travelX = (Math.random() - 0.5) * 60 + (c - 1) * 18; // slight column drift
+        const travelY = -80 - Math.random() * 160 - r * 6; // upward travel, rows drift a bit
+
+        newParticles.push({
+          id: `${Date.now()}-${c}-${r}-${Math.floor(Math.random() * 10000)}`,
+          left: startX,
+          top: startY,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: 12 + Math.random() * 18,
+          delay: r * 0.02 + Math.random() * 0.08,
+          travelX,
+          travelY,
+        });
+      }
+    }
 
     setHeartParticles((previous) => [...previous, ...newParticles]);
 
     const ids = newParticles.map((particle) => particle.id);
     window.setTimeout(() => {
       setHeartParticles((previous) => previous.filter((particle) => !ids.includes(particle.id)));
-    }, 1100);
+    }, 1400);
   };
 
   const handleToggleTask = (index: number) => {
