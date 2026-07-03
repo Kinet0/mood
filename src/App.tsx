@@ -28,12 +28,12 @@ const tasks = [
   'Exercise 🏃‍♀️',
   'Take a bath 🛁',
   'Send me pics 📸',
+  'Daily Journal Update 📝',
+  'Daily Prayer 🙏',
 ];
 
 const moreItems = [
-  'Daily Journal Update',
   'Academic improvement',
-  'Daily Prayer',
 ];
 
 type TaskProgress = {
