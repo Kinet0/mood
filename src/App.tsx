@@ -30,6 +30,12 @@ const tasks = [
   'Send me pics 📸',
 ];
 
+const moreItems = [
+  'Daily Journal Update',
+  'Academic improvement',
+  'Daily Prayer',
+];
+
 type TaskProgress = {
   completed: boolean;
   completedAt: string | null;
@@ -75,6 +81,7 @@ const App = () => {
     return createInitialTaskProgress();
   });
   const [heartParticles, setHeartParticles] = useState<HeartParticle[]>([]);
+  const [showMore, setShowMore] = useState(false);
 
   const completedTasks = taskProgress.map((task) => task.completed);
   const completedCount = completedTasks.filter(Boolean).length;
@@ -410,7 +417,7 @@ const App = () => {
               </section>
             </div>
 
-            <footer className="mt-4 rounded-[32px] border border-white/70 bg-white/80 p-5 text-center text-sm text-[#7e2b5e] shadow-glow">
+            <footer className="relative mt-4 rounded-[32px] border border-white/70 bg-white/80 p-5 text-center text-sm text-[#7e2b5e] shadow-glow">
               <motion.div
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
@@ -419,6 +426,40 @@ const App = () => {
                   💕 Remember: Drink water, eat well, take care of yourself, and think about me sometimes. 💕
                 </p>
               </motion.div>
+
+              <div className="mt-4 flex items-center justify-center gap-3">
+                <button
+                  onClick={() => setShowMore((s) => !s)}
+                  aria-expanded={showMore}
+                  className="rounded-full bg-pink-50/80 px-4 py-2 text-sm font-semibold text-pink-600 shadow-sm hover:brightness-95"
+                >
+                  More
+                </button>
+              </div>
+
+              <AnimatePresence>
+                {showMore && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.18 }}
+                    className="absolute left-1/2 bottom-full mb-3 w-64 -translate-x-1/2 rounded-2xl border border-white/70 bg-white/95 p-3 text-left text-sm text-[#7e2b5e] shadow-lg"
+                  >
+                    <div className="space-y-1">
+                      {moreItems.map((item) => (
+                        <button
+                          key={item}
+                          onClick={() => setShowMore(false)}
+                          className="w-full rounded-md px-3 py-2 text-left hover:bg-pink-50"
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </footer>
           </motion.div>
         </div>
