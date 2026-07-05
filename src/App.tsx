@@ -30,6 +30,8 @@ const tasks = [
   'Send me pics 📸',
   'Daily Journal Update 📝',
   'Daily Prayer 🙏',
+  'Learn new recipes to cook 🍳',
+  'Talk to a friend 💬',
 ];
 
 const moreItems = [
