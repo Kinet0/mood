@@ -99,47 +99,31 @@ const App = () => {
   }, [taskProgress]);
 
   const createHeartBurst = (event: MouseEvent<HTMLElement>) => {
-    // Arrange particles in window-like columns with ~0.2in (19px) vertical spacing
     const baseX = event.clientX;
     const baseY = event.clientY;
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-
-    // Colors requested: red, white, pink panther pink
     const colors = ['#ff0000', '#ffffff', '#ff69b4'];
 
-    const inchesToPx = (inches: number) => inches * 96; // 1in = 96px
-    const verticalSpacing = Math.round(inchesToPx(0.2)); // ~19px
-
-    const columns = 3;
-    const rows = 8;
-    const columnGap = 44; // horizontal separation between columns
-
-    const startRowTop = baseY - ((rows - 1) / 2) * verticalSpacing;
-
     const newParticles: HeartParticle[] = [];
+    const particleCount = 36;
 
-    for (let c = 0; c < columns; c++) {
-      const colCenterX = baseX + (c - (columns - 1) / 2) * columnGap + (Math.random() - 0.5) * 18;
+    for (let index = 0; index < particleCount; index++) {
+      const startX = Math.max(12, Math.min(viewportWidth - 12, baseX + (Math.random() - 0.5) * viewportWidth * 0.85));
+      const startY = Math.max(12, Math.min(viewportHeight - 12, baseY + (Math.random() - 0.5) * viewportHeight * 0.7));
+      const travelX = (Math.random() - 0.5) * 360 + (startX > viewportWidth / 2 ? 90 : -90);
+      const travelY = -180 - Math.random() * 260 + (Math.random() - 0.5) * 70;
 
-      for (let r = 0; r < rows; r++) {
-        const startX = Math.max(12, Math.min(viewportWidth - 12, colCenterX + (Math.random() - 0.5) * 20));
-        const startY = Math.max(12, Math.min(viewportHeight - 12, startRowTop + r * verticalSpacing + (Math.random() - 0.5) * 6));
-
-        const travelX = (Math.random() - 0.5) * 60 + (c - 1) * 18; // slight column drift
-        const travelY = -80 - Math.random() * 160 - r * 6; // upward travel, rows drift a bit
-
-        newParticles.push({
-          id: `${Date.now()}-${c}-${r}-${Math.floor(Math.random() * 10000)}`,
-          left: startX,
-          top: startY,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          size: 12 + Math.random() * 18,
-          delay: r * 0.02 + Math.random() * 0.08,
-          travelX,
-          travelY,
-        });
-      }
+      newParticles.push({
+        id: `${Date.now()}-${index}-${Math.floor(Math.random() * 10000)}`,
+        left: startX,
+        top: startY,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        size: 12 + Math.random() * 24,
+        delay: Math.random() * 0.1,
+        travelX,
+        travelY,
+      });
     }
 
     setHeartParticles((previous) => [...previous, ...newParticles]);
@@ -147,7 +131,7 @@ const App = () => {
     const ids = newParticles.map((particle) => particle.id);
     window.setTimeout(() => {
       setHeartParticles((previous) => previous.filter((particle) => !ids.includes(particle.id)));
-    }, 1400);
+    }, 1500);
   };
 
   const handleToggleTask = (index: number) => {
@@ -167,7 +151,7 @@ const App = () => {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center px-4 py-8 text-[#4a103c]">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <motion.div
           className="absolute left-[-10%] top-10 h-72 w-72 rounded-full bg-pink-300/20 blur-3xl"
           animate={{ x: [0, 20, 0], y: [0, -12, 0] }}
@@ -200,7 +184,7 @@ const App = () => {
         transition={{ duration: 0.8, ease: 'easeOut' }}
         className="relative z-10 w-full max-w-4xl rounded-[44px] border border-white/70 bg-white/80 p-6 shadow-[0_35px_120px_rgba(255,105,180,0.18)] backdrop-blur-3xl sm:p-10"
       >
-        <div className="pointer-events-none absolute inset-0 z-50">
+        <div className="pointer-events-none fixed inset-0 z-40 overflow-hidden">
           {heartParticles.map((particle) => (
             <motion.span
               key={particle.id}
@@ -213,7 +197,7 @@ const App = () => {
               }}
               initial={{ opacity: 1, y: 0, scale: 0.95, rotate: -15 }}
               animate={{ opacity: [1, 0.8, 0], x: particle.travelX, y: particle.travelY, scale: [0.95, 1.25, 1.4], rotate: [-15, 5, -5] }}
-              transition={{ duration: 1.1, delay: particle.delay, ease: 'easeOut' }}
+              transition={{ duration: 1.25, delay: particle.delay, ease: 'easeOut' }}
             >
               ❤️
             </motion.span>
