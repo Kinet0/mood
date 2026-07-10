@@ -32,7 +32,7 @@ const ChecklistItem = ({ label, completed, onToggle, onClick }: ChecklistItemPro
       animate={isShaking ? { x: [0, -6, 6, -4, 4, 0], rotate: [0, -2, 2, -1, 1, 0] } : { x: 0, rotate: 0 }}
       transition={{ duration: 0.35, ease: 'easeInOut' }}
       className={`group flex cursor-pointer items-center gap-4 rounded-[28px] border border-white/60 bg-white/70 p-4 text-sm shadow-glow transition-all duration-300 ${
-        completed ? 'bg-[#ffe4ec] border-pink-200/90' : 'hover:border-pink-200/90'
+        completed ? 'bg-[#fff3f8] border-rose-200/90' : 'hover:border-rose-200/90'
       }`}
       whileHover={{ y: -2, rotate: [0, 1, -1, 0] }}
       whileTap={{ scale: 0.98, rotate: [0, -2, 2, 0], x: [0, -4, 4, -2, 2, 0] }}
@@ -46,8 +46,8 @@ const ChecklistItem = ({ label, completed, onToggle, onClick }: ChecklistItemPro
         aria-checked={completed}
       />
       <span
-        className={`flex h-10 w-10 items-center justify-center rounded-2xl border border-pink-200/80 bg-white shadow-sm transition-all duration-300 ${
-          completed ? 'bg-gradient-to-br from-primary to-accent text-white shadow-[0_0_18px_rgba(255,20,147,0.35)]' : 'bg-white text-pink-500'
+        className={`flex h-10 w-10 items-center justify-center rounded-2xl border border-rose-200/80 bg-white shadow-sm transition-all duration-300 ${
+          completed ? 'bg-gradient-to-br from-primary to-accent text-white shadow-[0_0_18px_rgba(248,184,211,0.35)]' : 'bg-white text-rose-500'
         }`}
       >
         <motion.span
@@ -58,7 +58,7 @@ const ChecklistItem = ({ label, completed, onToggle, onClick }: ChecklistItemPro
           {completed ? '✓' : ''}
         </motion.span>
       </span>
-      <span className={`flex-1 text-left text-sm font-medium text-[#6a1749] ${completed ? 'line-through text-[#a86a90]' : ''}`}>
+      <span className={`flex-1 text-left text-sm font-medium text-[#7b4f71] ${completed ? 'line-through text-[#b68aa9]' : ''}`}>
         {label}
       </span>
     </motion.label>

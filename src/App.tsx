@@ -103,7 +103,7 @@ const App = () => {
     const baseY = event.clientY;
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-    const colors = ['#ff0000', '#ffffff', '#ff69b4'];
+    const colors = ['#F9D7E7', '#FFFFFF', '#F8B8D3'];
 
     const newParticles: HeartParticle[] = [];
     const particleCount = 36;
@@ -150,15 +150,15 @@ const App = () => {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center px-4 py-8 text-[#4a103c]">
+    <div className="relative flex min-h-screen items-center justify-center px-4 py-8 text-[#6c4964]">
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <motion.div
-          className="absolute left-[-10%] top-10 h-72 w-72 rounded-full bg-pink-300/20 blur-3xl"
+          className="absolute left-[-10%] top-10 h-72 w-72 rounded-full bg-rose-200/25 blur-3xl"
           animate={{ x: [0, 20, 0], y: [0, -12, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
-          className="absolute right-0 top-1/4 h-60 w-60 rounded-full bg-rose-300/20 blur-3xl"
+          className="absolute right-0 top-1/4 h-60 w-60 rounded-full bg-rose-200/20 blur-3xl"
           animate={{ x: [0, -16, 0], y: [0, 12, 0] }}
           transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
         />
@@ -182,7 +182,7 @@ const App = () => {
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative z-10 w-full max-w-4xl rounded-[44px] border border-white/70 bg-white/80 p-6 shadow-[0_35px_120px_rgba(255,105,180,0.18)] backdrop-blur-3xl sm:p-10"
+        className="relative z-10 w-full max-w-4xl rounded-[44px] border border-white/70 bg-white/80 p-6 shadow-[0_35px_120px_rgba(248,184,211,0.18)] backdrop-blur-3xl sm:p-10"
       >
         <div className="pointer-events-none fixed inset-0 z-40 overflow-hidden">
           {heartParticles.map((particle) => (
@@ -203,9 +203,9 @@ const App = () => {
             </motion.span>
           ))}
         </div>
-        <div className="relative overflow-hidden rounded-[42px] border border-white/60 bg-gradient-to-br from-white/90 via-[#fff0f4]/90 to-[#ffeaf3]/80 p-6 shadow-glow sm:p-10">
+        <div className="relative overflow-hidden rounded-[42px] border border-white/60 bg-gradient-to-br from-white/90 via-[#fff3f8]/90 to-[#ffe7f1]/80 p-6 shadow-glow sm:p-10">
           <motion.div
-            className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,105,180,0.15),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(255,20,147,0.12),_transparent_30%)]"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(248,184,211,0.15),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(248,184,211,0.12),_transparent_30%)]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.2 }}
@@ -225,10 +225,10 @@ const App = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.2 }}
-                className="rounded-[32px] border border-pink-100/80 bg-white/80 px-5 py-5 shadow-[0_15px_40px_rgba(255,105,180,0.12)]"
+                className="rounded-[32px] border border-rose-100/80 bg-white/80 px-5 py-5 shadow-[0_15px_40px_rgba(248,184,211,0.12)]"
               >
-                <div className="mb-4 flex flex-wrap items-center gap-3 text-sm font-medium uppercase tracking-[0.24em] text-pink-500">
-                  <Heart className="h-4 w-4 text-pink-500" />
+                <div className="mb-4 flex flex-wrap items-center gap-3 text-sm font-medium uppercase tracking-[0.24em] text-rose-400">
+                  <Heart className="h-4 w-4 text-rose-400" />
                   sweet morning ritual
                 </div>
                 <div className="space-y-4">
@@ -236,7 +236,7 @@ const App = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.7, delay: 0.35 }}
-                    className="text-3xl font-black uppercase tracking-[-0.04em] text-[#8d1b5c] sm:text-5xl"
+                    className="text-3xl font-black uppercase tracking-[-0.04em] text-[#7f5870] sm:text-5xl"
                   >
                     GOOD MORNING BEAUTIFUL ☀️
                   </motion.h1>
@@ -244,7 +244,7 @@ const App = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.7, delay: 0.5 }}
-                    className="text-lg font-semibold text-[#9e2f76] sm:text-xl"
+                    className="text-lg font-semibold text-[#8f5c79] sm:text-xl"
                   >
                     Wake up, Night Owl! 🦉💕
                   </motion.div>
@@ -252,7 +252,7 @@ const App = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.7, delay: 0.65 }}
-                    className="max-w-2xl text-base text-[#6f2960] sm:text-lg"
+                    className="max-w-2xl text-base text-[#7e5471] sm:text-lg"
                   >
                     Hope your day is as cute as you are.
                   </motion.p>
@@ -264,14 +264,14 @@ const App = () => {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.65, delay: 0.9 }}
-                  className="rounded-[32px] border border-white/70 bg-blush/80 p-6 shadow-[0_24px_60px_rgba(255,105,180,0.14)]"
+                  className="rounded-[32px] border border-white/70 bg-blush/80 p-6 shadow-[0_24px_60px_rgba(248,184,211,0.14)]"
                 >
                   <div className="mb-6 flex items-center justify-between gap-4">
                     <div>
-                      <p className="text-sm uppercase tracking-[0.2em] text-pink-500">💖 How are you feeling today?</p>
-                      <p className="mt-3 text-sm text-[#73355a]">Tap your mood to unlock your checklist.</p>
+                      <p className="text-sm uppercase tracking-[0.2em] text-rose-400">💖 How are you feeling today?</p>
+                      <p className="mt-3 text-sm text-[#7f5370]">Tap your mood to unlock your checklist.</p>
                     </div>
-                    <Sparkles className="h-6 w-6 text-[#ff6dac]" />
+                    <Sparkles className="h-6 w-6 text-[#f49fbf]" />
                   </div>
                   <div className="grid gap-4 md:grid-cols-4">
                     {moodOptions.map((mood) => (
@@ -295,9 +295,9 @@ const App = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 14 }}
                         transition={{ duration: 0.4 }}
-                        className="mt-6 rounded-[28px] border border-pink-200/80 bg-white/80 p-5 text-center text-sm font-semibold text-[#7a1f55] shadow-sm"
+                        className="mt-6 rounded-[28px] border border-rose-200/80 bg-white/80 p-5 text-center text-sm font-semibold text-[#7f5370] shadow-sm"
                       >
-                        You are feeling <span className="text-pink-600">{selectedMood}</span> today 💕
+                        You are feeling <span className="text-rose-500">{selectedMood}</span> today 💕
                       </motion.div>
                     ) : (
                       <motion.div
@@ -316,12 +316,12 @@ const App = () => {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.65, delay: 1.05 }}
-                  className="rounded-[32px] border border-white/70 bg-white/85 p-6 shadow-[0_24px_60px_rgba(255,105,180,0.14)]"
+                  className="rounded-[32px] border border-white/70 bg-white/85 p-6 shadow-[0_24px_60px_rgba(248,184,211,0.14)]"
                 >
                   <div className="mb-5 flex items-center justify-between gap-4">
                     <div>
-                      <p className="text-sm uppercase tracking-[0.18em] text-pink-500">✨ Today's Mission ✨</p>
-                      <p className="mt-2 text-xs text-[#7a3157]">Complete each tiny love task for bonus smiles.</p>
+                      <p className="text-sm uppercase tracking-[0.18em] text-rose-400">✨ Today's Mission ✨</p>
+                      <p className="mt-2 text-xs text-[#7f5370]">Complete each tiny love task for bonus smiles.</p>
                     </div>
                     <MotionSparkleIcon />
                   </div>
@@ -345,13 +345,13 @@ const App = () => {
                       .filter((task) => task.completedAt)
                       .sort((firstTask, secondTask) => (secondTask.completedAt ?? '').localeCompare(firstTask.completedAt ?? ''))
                       .map((task) => (
-                        <div key={task.label} className="rounded-2xl border border-pink-100/80 bg-white/70 px-3 py-2 text-sm text-[#7a3157] shadow-sm">
+                        <div key={task.label} className="rounded-2xl border border-rose-100/80 bg-white/70 px-3 py-2 text-sm text-[#7f5370] shadow-sm">
                           <span className="font-semibold">{task.label}</span>
-                          <span className="ml-2 text-pink-600">• completed {formatCompletionDate(task.completedAt)}</span>
+                          <span className="ml-2 text-rose-500">• completed {formatCompletionDate(task.completedAt)}</span>
                         </div>
                       ))}
                   </div>
-                  <div className="mt-6 rounded-[28px] border border-pink-100/80 bg-pink-50/80 p-4 text-center text-sm text-[#7e2b5e] shadow-inner">
+                  <div className="mt-6 rounded-[28px] border border-rose-100/80 bg-rose-50/80 p-4 text-center text-sm text-[#7f5370] shadow-inner">
                     {selectedMood
                       ? 'Checklist unlocked. Let the self-care begin!'
                       : 'Mood tracker first—then your love mission opens.'}
@@ -362,14 +362,14 @@ const App = () => {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.65, delay: 1.2 }}
-                  className="rounded-[32px] border border-white/70 bg-gradient-to-br from-[#fff0f4] via-[#ffeaf3] to-[#fff5f7] p-6 shadow-[0_24px_60px_rgba(255,105,180,0.14)]"
+                  className="rounded-[32px] border border-white/70 bg-gradient-to-br from-[#fff3f8] via-[#ffe9f2] to-[#fff2f7] p-6 shadow-[0_24px_60px_rgba(248,184,211,0.14)]"
                 >
                   <div className="mb-5 flex items-center justify-between gap-3">
                     <div>
-                      <p className="text-sm uppercase tracking-[0.18em] text-pink-500">Daily Progress</p>
-                      <p className="mt-2 text-sm text-[#7a3157]">{completedCount} / {tasks.length} Complete</p>
+                      <p className="text-sm uppercase tracking-[0.18em] text-rose-400">Daily Progress</p>
+                      <p className="mt-2 text-sm text-[#7f5370]">{completedCount} / {tasks.length} Complete</p>
                     </div>
-                    <div className="rounded-3xl bg-white/80 px-4 py-2 text-sm font-semibold text-pink-600 shadow-sm">
+                    <div className="rounded-3xl bg-white/80 px-4 py-2 text-sm font-semibold text-rose-500 shadow-sm">
                       {progressPercentage}%
                     </div>
                   </div>
@@ -388,7 +388,7 @@ const App = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 12 }}
                         transition={{ duration: 0.4 }}
-                        className="mt-6 rounded-[28px] border border-pink-200/90 bg-pink-100/80 p-5 text-center text-sm font-semibold text-[#9e2f76] shadow-[0_0_30px_rgba(255,105,180,0.2)]"
+                        className="mt-6 rounded-[28px] border border-rose-200/90 bg-rose-100/80 p-5 text-center text-sm font-semibold text-[#8e5d78] shadow-[0_0_30px_rgba(248,184,211,0.2)]"
                       >
                         <div className="mb-3 flex items-center justify-center gap-2 text-xl">
                           <span>🎉</span>
@@ -403,7 +403,7 @@ const App = () => {
               </section>
             </div>
 
-            <footer className="relative mt-4 rounded-[32px] border border-white/70 bg-white/80 p-5 text-center text-sm text-[#7e2b5e] shadow-glow">
+            <footer className="relative mt-4 rounded-[32px] border border-white/70 bg-white/80 p-5 text-center text-sm text-[#7f5370] shadow-glow">
               <motion.div
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
@@ -417,7 +417,7 @@ const App = () => {
                 <button
                   onClick={() => setShowMore((s) => !s)}
                   aria-expanded={showMore}
-                  className="rounded-full bg-pink-50/80 px-4 py-2 text-sm font-semibold text-pink-600 shadow-sm hover:brightness-95"
+                  className="rounded-full bg-rose-50/80 px-4 py-2 text-sm font-semibold text-rose-500 shadow-sm hover:brightness-95"
                 >
                   More
                 </button>
@@ -437,7 +437,7 @@ const App = () => {
                         <button
                           key={item}
                           onClick={() => setShowMore(false)}
-                          className="w-full rounded-md px-3 py-2 text-left hover:bg-pink-50"
+                          className="w-full rounded-md px-3 py-2 text-left hover:bg-rose-50"
                         >
                           {item}
                         </button>
@@ -456,7 +456,7 @@ const App = () => {
 
 const MotionSparkleIcon = () => (
   <motion.div animate={{ rotate: [0, 12, -8, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
-    <Sparkles className="h-7 w-7 text-pink-500" />
+    <Sparkles className="h-7 w-7 text-rose-400" />
   </motion.div>
 );
 

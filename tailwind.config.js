@@ -4,13 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#FF69B4',
-        soft: '#FFC0CB',
-        blush: '#FFE4E1',
-        accent: '#FF1493',
+        primary: '#F9D7E7',
+        soft: '#FCE7F2',
+        blush: '#FFF2F7',
+        accent: '#F8B8D3',
       },
       boxShadow: {
-        glow: '0 20px 80px rgba(255, 105, 180, 0.2)',
+        glow: '0 20px 80px rgba(248, 184, 211, 0.18)',
       },
       borderRadius: {
         xl: '28px',
