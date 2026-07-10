@@ -27,6 +27,7 @@ const tasks = [
   'Eat real food 🍽️',
   'Exercise 🏃‍♀️',
   'Take a bath 🛁',
+  'Clean your nails 💅',
   'Send me pics 📸',
   'Daily Journal Update 📝',
   'Daily Prayer 🙏',
